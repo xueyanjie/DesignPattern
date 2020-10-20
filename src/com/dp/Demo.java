@@ -25,6 +25,35 @@ public class Demo {
         s2.draw();
         s3.draw();
          */
+        //Shutdown hook
+        Thread thread1 = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                System.out.println("thread1...");
+            }
+        };
+        System.out.println("main开始");
+        try {
+            thread1.start();
+            thread1.join();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        System.out.println("main即将结束");
+        Thread shutdownThread = new Thread() {
+            @Override
+            public void run() {
+                System.out.println("Shutdown hook");
+            }
+        };
+        Runtime.getRuntime().addShutdownHook(shutdownThread);
+        System.out.println("main结束");
     }
 
 }
